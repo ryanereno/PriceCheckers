@@ -2,8 +2,8 @@ import smtplib
 
 EMAIL_ADDRESS = 'NotifyingPrice@gmail.com'
 EMAIL_PASSWORD = 'FuckChegg123'
-RECIPIENT = 'ryanaereno@gmail.com'
-MSG = 'Testing Works!'
+RECIPIENT = ''
+MSG = ''
 
 
 server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
