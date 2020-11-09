@@ -1,5 +1,7 @@
 import smtplib
 import requests
+import time
+import schedule
 from bs4 import BeautifulSoup as soup
 
 EMAIL_ADDRESS = 'NotifyingPrice@gmail.com'
@@ -60,5 +62,6 @@ def getPrice(my_url):
 
     return new_price
 
-
+def runAtTime():
+    schedule.every().day.at('12:00').do(checkPrice())
 main()
