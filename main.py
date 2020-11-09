@@ -4,8 +4,8 @@ from bs4 import BeautifulSoup as soup
 
 EMAIL_ADDRESS = 'NotifyingPrice@gmail.com'
 EMAIL_PASSWORD = 'FuckChegg123'
-RECIPIENT = ''
-MSG = 'The price for your item has reached your desired price!'
+RECIPIENT = 'ryanaereno@gmail.com'
+MSG = 'The price for your item has reached your desired price! Purchase Now! \n'
 
 def main():
     #telling amazon that im a real browser
@@ -25,22 +25,21 @@ def main():
 
     my_price = float(input())
 
-    checkPrice(my_price, actual_price)
+    checkPrice(my_price, actual_price, my_url)
 
-def sendEmail():
+def sendEmail(my_url):
     server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
 
     server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
     server.sendmail(EMAIL_ADDRESS,
                     RECIPIENT,
-                    MSG)
+                    MSG + my_url)
 
     server.quit()
 
-def checkPrice(my_price, actual_price):
+def checkPrice(my_price, actual_price, my_url):
     if my_price <= actual_price:
-
-        sendEmail()
+        sendEmail(my_url)
 
     else:
         print("Nah G")
