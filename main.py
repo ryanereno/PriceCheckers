@@ -21,19 +21,19 @@ def main():
     temp_price = container[0].text
 
     actual_price = float(temp_price[2:len(temp_price)])
-
+    print(actual_price)
 
     my_price = float(input())
 
     checkPrice(my_price, actual_price, my_url)
 
-def sendEmail():
+def sendEmail(my_url):
     server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
 
     server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
     server.sendmail(EMAIL_ADDRESS,
                     RECIPIENT,
-                    MSG)
+                    MSG + my_url)
 
     server.quit()
 
