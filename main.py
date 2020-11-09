@@ -13,22 +13,24 @@ HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gec
            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "DNT": "1",
            "Connection": "close", "Upgrade-Insecure-Requests": "1"}
 price = None
+my_url = ''
 
 
 def main():
     # this lets python know that price will be referring to the global one defined above
     global price
+    global my_url
 
     my_url = 'http://rb.gy/legkuo'
-
-    price = getPrice(my_url)
+    price = getPrice()
 
     while True:
         schedule.run_pending()
         time.sleep(1)
 
 
-def sendEmail(my_url):
+def sendEmail():
+
     server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
 
     server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
@@ -39,20 +41,20 @@ def sendEmail(my_url):
     server.quit()
 
 
-def checkPrice(original_price, my_url):
+def checkPrice(original_price):
     global price
 
-    new_price = getPrice(my_url)
+    new_price = getPrice()
 
     if new_price < original_price:
-        sendEmail(my_url)
+        sendEmail()
         price = new_price
 
     elif new_price > original_price:
         price = new_price
 
 
-def getPrice(my_url):
+def getPrice():
     resp = requests.get(my_url, headers=HEADERS)
 
     ps = soup(resp.content, 'lxml')
@@ -64,7 +66,9 @@ def getPrice(my_url):
 
     return new_price
 
+
 def runAtTime():
-    schedule.every().day.at('12:00').do(checkPrice())
+    schedule.every().day.at('12:00').do(checkPrice(price))
+
 
 main()
