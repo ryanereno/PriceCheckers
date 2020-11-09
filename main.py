@@ -27,13 +27,13 @@ def main():
 
     checkPrice(my_price, actual_price, my_url)
 
-def sendEmail(my_url):
+def sendEmail():
     server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
 
     server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
     server.sendmail(EMAIL_ADDRESS,
                     RECIPIENT,
-                    MSG + my_url)
+                    MSG)
 
     server.quit()
 
