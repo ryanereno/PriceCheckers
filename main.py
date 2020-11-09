@@ -23,7 +23,9 @@ def main():
 
     price = getPrice(my_url)
 
-    checkPrice(price, my_url)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
 
 
 def sendEmail(my_url):
@@ -64,4 +66,5 @@ def getPrice(my_url):
 
 def runAtTime():
     schedule.every().day.at('12:00').do(checkPrice())
+
 main()
