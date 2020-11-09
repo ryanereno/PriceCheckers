@@ -21,11 +21,12 @@ def main():
     global price
     global my_url
 
+    schedule.every().day.at('12:00').do(checkPrice(price))
+
     my_url = 'http://rb.gy/legkuo'
     price = getPrice()
 
     while True:
-        runAtTime()
         schedule.run_pending()
         time.sleep(86401)
 
@@ -66,10 +67,6 @@ def getPrice():
     new_price = float(temp_price[2:len(temp_price)])
 
     return new_price
-
-
-def runAtTime():
-    schedule.every().day.at('12:00').do(checkPrice(price))
 
 
 main()
