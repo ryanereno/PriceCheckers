@@ -25,8 +25,9 @@ def main():
     price = getPrice()
 
     while True:
+        runAtTime()
         schedule.run_pending()
-        time.sleep(86399)
+        time.sleep(86401)
 
 
 def sendEmail():
