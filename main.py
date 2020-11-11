@@ -119,6 +119,8 @@ def readFile():
             ALL_EMAILS.insert(tracker, row[2])
             tracker += 1
 
+    data.close()
+
 
 def GUI():
     master = Tk()
