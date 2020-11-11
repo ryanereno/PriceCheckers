@@ -24,15 +24,15 @@ ALL_EMAILS = []
 data = open("checker_database.csv", "a+")
 
 
-
 def main():
-    #function for GUI to run
-    #GUI()
+    # function for GUI to run
+    # GUI()
 
     # checking values to be correct
-    print(price)
-    print(my_url)
-    print(RECIPIENT)
+    #print(price)
+    #print(my_url)
+    #print(RECIPIENT)
+
 
     # tracking links,emails,and prices to file
     # writeToFile()
@@ -72,20 +72,20 @@ def sendInitialEmail():
 def checkPrice(original_price):
     global price
     index = 0
+
     for x in ALL_LINKS:
-      new_price = getPrice(x)
+        new_price = getPrice(x)
 
-      if new_price < ALL_PRICES[index]:
-        sendPriceEmail(ALL_EMAILS[index])
-        ALL_PRICES[index] = new_price
-        index+=1
+        if new_price < ALL_PRICES[index]:
+            sendPriceEmail(ALL_EMAILS[index])
+            ALL_PRICES[index] = new_price
+            index += 1
 
-      elif new_price > original_price:
-         price = new_price
+        elif new_price > original_price:
+            ALL_PRICES[index] = new_price
 
 
 def getPrice(url):
-
     resp = requests.get(url, headers=HEADERS)
 
     ps = soup(resp.content, 'lxml')
@@ -118,7 +118,7 @@ def readFile():
         readCSV = csv.reader(csvfile, delimiter=',')
         for row in readCSV:
             ALL_LINKS.insert(tracker, row[0])
-            ALL_PRICES.insert(tracker, row[1])
+            ALL_PRICES.insert(tracker, float(row[1]))
             ALL_EMAILS.insert(tracker, row[2])
             tracker += 1
 
@@ -153,7 +153,7 @@ def GUI():
 
         # make sure the user inputs a valid newegg URL and EMAIL
         try:
-            price = getPrice()
+            price = getPrice(my_url)
             try:
                 sendInitialEmail()
 
