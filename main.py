@@ -91,13 +91,14 @@ def getPrice():
 
 def GUI():
     master = Tk()
+    master.geometry('300x70')
 
     # e1 is the input field for URL and e2 is for Email
-    e1 = Entry(master)
+    e1 = Entry(master, width=50)
     e1.grid(row=0, column=1)
     e1.insert(10, 'Newegg URL')
 
-    e2 = Entry(master)
+    e2 = Entry(master, width=50)
     e2.grid(row=1, column=1)
     e2.insert(20, 'Email')
 
