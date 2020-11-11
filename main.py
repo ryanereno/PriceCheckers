@@ -23,6 +23,7 @@ ALL_EMAILS = []
 data = open("checker_database.csv", "a+")
 
 
+
 def main():
     # function for GUI to run
     GUI()
@@ -71,8 +72,8 @@ def checkPrice(original_price):
     global price
 
     new_price = getPrice()
-
-    if new_price < original_price:
+    index = 0
+    if new_price < ALL_PRICES[0]:
         sendPriceEmail()
         price = new_price
 
@@ -110,12 +111,12 @@ def readFile():
     tracker = 0
     data.seek(0)
 
-    for line in data:
-        ALL_LINKS.insert(tracker, line)
+    for row in data:
+        ALL_LINKS.insert(tracker, row[0])
         ALL_LINKS = ALL_LINKS[tracker].rstrip('\n')
-        ALL_PRICES.insert(tracker, line)
+        ALL_PRICES.insert(tracker, row[1])
         ALL_PRICES = ALL_PRICES[tracker].rstrip('\n')
-        ALL_EMAILS.insert(tracker, line)
+        ALL_EMAILS.insert(tracker, row[2])
         ALL_EMAILS = ALL_EMAILS[tracker].rstrip('\n')
         tracker+=1
 
