@@ -17,6 +17,10 @@ HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gec
 price = None
 my_url = ''
 
+ALL_LINKS = []
+ALL_PRICES = []
+ALL_EMAILS = []
+
 
 def main():
     # function for GUI to run
@@ -102,10 +106,6 @@ def readFile():
     global ALL_LINKS
     global ALL_PRICES
     global ALL_EMAILS
-
-    ALL_LINKS = []
-    ALL_PRICES = []
-    ALL_EMAILS = []
 
     tracker = 0
     data.seek(0)
