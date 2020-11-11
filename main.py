@@ -19,14 +19,9 @@ my_url = ''
 
 
 def main():
-    # this lets python know that price will be referring to the global one defined above
-    global price
-    global my_url
-
     # function for GUI to run
     GUI()
 
-    price = getPrice()
     print(price)
     print(my_url)
     print(RECIPIENT)
@@ -111,12 +106,25 @@ def GUI():
     def get():
         global my_url
         global RECIPIENT
+        global price
+
         my_url = e1.get()
         RECIPIENT = e2.get()
 
-        # sendInitialEmail()
 
-        master.quit()
+        # make sure the user inputs a valid newegg URL and EMAIL
+        try:
+            price = getPrice()
+            try:
+                sendInitialEmail()
+
+                master.quit()
+
+            except:
+                print("NOT A VALID EMAIL")  # implement this in gui later
+
+        except:
+            print("NOT A VALID URL")        # implement this in gui later
 
     Button(master, text="Submit", command=get).grid(row=3, column=1)
 
