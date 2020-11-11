@@ -26,7 +26,7 @@ data = open("checker_database.csv", "a+")
 
 def main():
     # function for GUI to run
-    # GUI()
+    GUI()
 
     # checking values to be correct
     #print(price)
