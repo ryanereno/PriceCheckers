@@ -1,5 +1,6 @@
 import smtplib
 import requests
+import csv
 import time
 import schedule
 from tkinter import *
@@ -25,8 +26,8 @@ data = open("checker_database.csv", "a+")
 
 
 def main():
-    # function for GUI to run
-    GUI()
+    #function for GUI to run
+    #GUI()
 
     # checking values to be correct
     print(price)
@@ -34,7 +35,7 @@ def main():
     print(RECIPIENT)
 
     # tracking links,emails,and prices to file
-    writeToFile()
+    # writeToFile()
     # cant add a float to string to print it out
     # string_price = str(price)
     # just checking the price
@@ -99,7 +100,7 @@ def getPrice():
 
 def writeToFile():
     global data
-    data.write(my_url + '\n' + str(price) + "\n" + RECIPIENT + "\n")
+    data.write(my_url + ',' + str(price) + "," + RECIPIENT + "\n")
     data.close()
 
 
@@ -109,16 +110,15 @@ def readFile():
     global ALL_EMAILS
 
     tracker = 0
-    data.seek(0)
 
-    for row in data:
-        ALL_LINKS.insert(tracker, row[0])
-        ALL_LINKS = ALL_LINKS[tracker].rstrip('\n')
-        ALL_PRICES.insert(tracker, row[1])
-        ALL_PRICES = ALL_PRICES[tracker].rstrip('\n')
-        ALL_EMAILS.insert(tracker, row[2])
-        ALL_EMAILS = ALL_EMAILS[tracker].rstrip('\n')
-        tracker+=1
+    with open('checker_database.csv') as csvfile:
+        readCSV = csv.reader(csvfile, delimiter=',')
+        for row in readCSV:
+            ALL_LINKS.insert(tracker, row[0])
+            ALL_PRICES.insert(tracker, row[1])
+            ALL_EMAILS.insert(tracker, row[2])
+            tracker += 1
+
 
 def GUI():
     master = Tk()
