@@ -134,15 +134,27 @@ def GUI():
                 master.quit()
 
             except:
-                print("NOT A VALID EMAIL")  # implement this in gui later
+                errorMSG = 'NOT A VALID EMAIL'
+                popupMsg(errorMSG)
 
         except:
-            print("NOT A VALID URL")  # implement this in gui later
+            errorMSG = "NOT A VALID URL"
+            popupMsg(errorMSG)
 
     # submit button
     Button(master, text="Submit", command=get, width=50).grid(row=3, column=1)
 
     mainloop()
+
+
+def popupMsg(msg):
+    popup = Tk()
+    popup.wm_title("!")
+    label = Label(popup, text=msg, foreground="red", font='Helvetica 20 bold')
+    label.pack(side="top", fill="x", pady=10)
+    B1 = Button(popup, text="Okay", command=popup.destroy)
+    B1.pack()
+    popup.mainloop()
 
 
 main()
