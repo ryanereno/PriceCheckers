@@ -8,14 +8,14 @@ from bs4 import BeautifulSoup as soup
 EMAIL_ADDRESS = 'NotifyingPrice@gmail.com'
 EMAIL_PASSWORD = 'FuckChegg123'
 RECIPIENT = ''
-PRICE_MSG = 'The price for your item has lowered! Purchase Now! \n'
+PRICE_MSG = 'The price for your item has lowered to $! Purchase Now! \n'
 INITIAL_MSG = 'Thank you for signing up! We will track this items price \n'
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0",
            "Accept-Encoding": "gzip, deflate",
            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "DNT": "1",
            "Connection": "close", "Upgrade-Insecure-Requests": "1"}
 price = None
-my_url = 'https://www.amazon.com/DASH-Delish-Compact-Beaters-Included/dp/B08F2TMDB1?ref_=Oct_DLandingS_D_48730293_61&smid=ATVPDKIKX0DER'
+my_url = ''
 
 
 def main():
@@ -90,28 +90,32 @@ def getPrice():
 
     return new_price
 
+
 def writeToFile():
-    data = open("checker_database.text","a+")
-    data.write(my_url+"\n")
-    data.write(str(getPrice()))
-    data.write("\n")
+    data = open("checker_database.csv", "a+")
+    headers = "NEWEGG URL, EMAIL \n"
+    data.write(headers)
+    data.write(my_url + "," + str(price))
+    data.close()
 
 
 def GUI():
     master = Tk()
-    master.geometry('300x70')
+
+    # window size
+    master.geometry('600x70')
 
     # e1 is the input field for URL and e2 is for Email
-    e1 = Entry(master, width=50)
+    e1 = Entry(master, width=100)
     e1.grid(row=0, column=1)
     e1.insert(10, 'Newegg URL')
 
-    e2 = Entry(master, width=50)
+    e2 = Entry(master, width=100)
     e2.grid(row=1, column=1)
     e2.insert(20, 'Email')
 
     # get refers to the command used by the submit button
-    # one the submit button is hit my_url and RECIPIENT are updated
+    # once the submit button is hit my_url and RECIPIENT are updated
     # and a confirmation email is sent
     def get():
         global my_url
@@ -120,7 +124,6 @@ def GUI():
 
         my_url = e1.get()
         RECIPIENT = e2.get()
-
 
         # make sure the user inputs a valid newegg URL and EMAIL
         try:
@@ -134,9 +137,10 @@ def GUI():
                 print("NOT A VALID EMAIL")  # implement this in gui later
 
         except:
-            print("NOT A VALID URL")        # implement this in gui later
+            print("NOT A VALID URL")  # implement this in gui later
 
-    Button(master, text="Submit", command=get).grid(row=3, column=1)
+    # submit button
+    Button(master, text="Submit", command=get, width=50).grid(row=3, column=1)
 
     mainloop()
 
