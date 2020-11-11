@@ -47,12 +47,12 @@ def main():
 #        time.sleep(86401)
 
 
-def sendPriceEmail():
+def sendPriceEmail(email):
     server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
 
     server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
     server.sendmail(EMAIL_ADDRESS,
-                    RECIPIENT,
+                    email,
                     PRICE_MSG + my_url)
 
     server.quit()
@@ -71,19 +71,22 @@ def sendInitialEmail():
 
 def checkPrice(original_price):
     global price
-
-    new_price = getPrice()
     index = 0
-    if new_price < ALL_PRICES[0]:
-        sendPriceEmail()
-        price = new_price
+    for x in ALL_LINKS:
+      new_price = getPrice(x)
 
-    elif new_price > original_price:
-        price = new_price
+      if new_price < ALL_PRICES[index]:
+        sendPriceEmail(ALL_EMAILS[index])
+        ALL_PRICES[index] = new_price
+        index+=1
+
+      elif new_price > original_price:
+         price = new_price
 
 
-def getPrice():
-    resp = requests.get(my_url, headers=HEADERS)
+def getPrice(url):
+
+    resp = requests.get(url, headers=HEADERS)
 
     ps = soup(resp.content, 'lxml')
 
