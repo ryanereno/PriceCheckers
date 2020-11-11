@@ -15,7 +15,7 @@ HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gec
            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "DNT": "1",
            "Connection": "close", "Upgrade-Insecure-Requests": "1"}
 price = None
-my_url = ''
+my_url = 'https://www.amazon.com/DASH-Delish-Compact-Beaters-Included/dp/B08F2TMDB1?ref_=Oct_DLandingS_D_48730293_61&smid=ATVPDKIKX0DER'
 
 
 def main():
@@ -27,6 +27,8 @@ def main():
     print(my_url)
     print(RECIPIENT)
 
+    # tracking links,emails,and prices to file
+    writeToFile()
     # cant add a float to string to print it out
     # string_price = str(price)
     # just checking the price
@@ -87,6 +89,12 @@ def getPrice():
     new_price = float(strong_num[1].text + small_num[0].text)
 
     return new_price
+
+def writeToFile():
+    data = open("checker_database.text","a+")
+    data.write(my_url+"\n")
+    data.write(str(getPrice()))
+    data.write("\n")
 
 
 def GUI():
