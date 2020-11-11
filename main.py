@@ -22,6 +22,7 @@ def main():
     # function for GUI to run
     GUI()
 
+    # checking values to be correct
     print(price)
     print(my_url)
     print(RECIPIENT)
