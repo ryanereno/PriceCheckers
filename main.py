@@ -21,18 +21,22 @@ def main():
     global price
     global my_url
 
-    schedule.every().day.at('12:00').do(checkPrice(price))
+    my_url = 'https://rb.gy/j8eslh'
 
-    my_url = 'http://rb.gy/legkuo'
     price = getPrice()
 
-    while True:
-        schedule.run_pending()
-        time.sleep(86401)
+    # cant add a float to string to print it out
+    # string_price = str(price)
+    # just checking the price
+    # print('The price is $' + string_price)
+
+
+#    while True:
+#        schedule.run_pending()
+#        time.sleep(86401)
 
 
 def sendEmail():
-
     server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
 
     server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
@@ -61,10 +65,14 @@ def getPrice():
 
     ps = soup(resp.content, 'lxml')
 
-    container = ps.findAll("span", {"id": "price_inside_buybox"})
-    temp_price = container[0].text
+    # the whole number of the price is in a strong tag
+    strong_num = ps.findAll("strong")
 
-    new_price = float(temp_price[2:len(temp_price)])
+    # the decimal is in a sup tag
+    small_num = ps.findAll("sup")
+
+    new_price = float(strong_num[1].text + small_num[0].text)
+    print(new_price)
 
     return new_price
 
