@@ -92,12 +92,32 @@ def getPrice():
 
 
 def writeToFile():
+    global data
     data = open("checker_database.csv", "a+")
-    headers = "NEWEGG URL, EMAIL \n"
-    data.write(headers)
-    data.write(my_url + "," + str(price))
+    data.write(my_url + '\n' + str(price) + "\n" + RECIPIENT + "\n")
     data.close()
 
+
+def readFile():
+    global ALL_LINKS
+    global ALL_PRICES
+    global ALL_EMAILS
+
+    ALL_LINKS = []
+    ALL_PRICES = []
+    ALL_EMAILS = []
+
+    tracker = 0
+    data.seek(0)
+
+    for line in data:
+        ALL_LINKS.insert(tracker, line)
+        ALL_LINKS = ALL_LINKS[tracker].rstrip('\n')
+        ALL_PRICES.insert(tracker, line)
+        ALL_PRICES = ALL_PRICES[tracker].rstrip('\n')
+        ALL_EMAILS.insert(tracker, line)
+        ALL_EMAILS = ALL_EMAILS[tracker].rstrip('\n')
+        tracker+=1
 
 def GUI():
     master = Tk()
