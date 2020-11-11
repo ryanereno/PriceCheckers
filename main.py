@@ -20,6 +20,7 @@ my_url = ''
 ALL_LINKS = []
 ALL_PRICES = []
 ALL_EMAILS = []
+data = open("checker_database.csv", "a+")
 
 
 def main():
@@ -97,7 +98,6 @@ def getPrice():
 
 def writeToFile():
     global data
-    data = open("checker_database.csv", "a+")
     data.write(my_url + '\n' + str(price) + "\n" + RECIPIENT + "\n")
     data.close()
 
