@@ -2,12 +2,14 @@ import smtplib
 import requests
 import time
 import schedule
+from tkinter import *
 from bs4 import BeautifulSoup as soup
 
 EMAIL_ADDRESS = 'NotifyingPrice@gmail.com'
 EMAIL_PASSWORD = 'FuckChegg123'
 RECIPIENT = ''
-MSG = 'The price for your item has lowered! Purchase Now! \n'
+PRICE_MSG = 'The price for your item has lowered! Purchase Now! \n'
+INITIAL_MSG = 'Thank you for signing up! We will track this items price \n'
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:66.0) Gecko/20100101 Firefox/66.0",
            "Accept-Encoding": "gzip, deflate",
            "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8", "DNT": "1",
@@ -21,9 +23,13 @@ def main():
     global price
     global my_url
 
-    my_url = 'https://rb.gy/j8eslh'
+    # function for GUI to run
+    GUI()
 
     price = getPrice()
+    print(price)
+    print(my_url)
+    print(RECIPIENT)
 
     # cant add a float to string to print it out
     # string_price = str(price)
@@ -36,13 +42,24 @@ def main():
 #        time.sleep(86401)
 
 
-def sendEmail():
+def sendPriceEmail():
     server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
 
     server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
     server.sendmail(EMAIL_ADDRESS,
                     RECIPIENT,
-                    MSG + my_url)
+                    PRICE_MSG + my_url)
+
+    server.quit()
+
+
+def sendInitialEmail():
+    server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+
+    server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+    server.sendmail(EMAIL_ADDRESS,
+                    RECIPIENT,
+                    INITIAL_MSG + my_url)
 
     server.quit()
 
@@ -53,7 +70,7 @@ def checkPrice(original_price):
     new_price = getPrice()
 
     if new_price < original_price:
-        sendEmail()
+        sendPriceEmail()
         price = new_price
 
     elif new_price > original_price:
@@ -72,9 +89,38 @@ def getPrice():
     small_num = ps.findAll("sup")
 
     new_price = float(strong_num[1].text + small_num[0].text)
-    print(new_price)
 
     return new_price
+
+
+def GUI():
+    master = Tk()
+
+    # e1 is the input field for URL and e2 is for Email
+    e1 = Entry(master)
+    e1.grid(row=0, column=1)
+    e1.insert(10, 'Newegg URL')
+
+    e2 = Entry(master)
+    e2.grid(row=1, column=1)
+    e2.insert(20, 'Email')
+
+    # get refers to the command used by the submit button
+    # one the submit button is hit my_url and RECIPIENT are updated
+    # and a confirmation email is sent
+    def get():
+        global my_url
+        global RECIPIENT
+        my_url = e1.get()
+        RECIPIENT = e2.get()
+
+        # sendInitialEmail()
+
+        master.quit()
+
+    Button(master, text="Submit", command=get).grid(row=3, column=1)
+
+    mainloop()
 
 
 main()
