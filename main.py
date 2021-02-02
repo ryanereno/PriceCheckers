@@ -6,8 +6,9 @@ import schedule
 from tkinter import *
 from bs4 import BeautifulSoup as soup
 
-EMAIL_ADDRESS = 'NotifyingPrice@gmail.com'
-EMAIL_PASSWORD = 'FuckChegg123'
+#insert email address and password for bot
+EMAIL_ADDRESS = ''
+EMAIL_PASSWORD = ''
 RECIPIENT = ''
 PRICE_MSG = 'The price for your item has lowered to $! Purchase Now! \n'
 INITIAL_MSG = 'Thank you for signing up! We will track this items price \n'
